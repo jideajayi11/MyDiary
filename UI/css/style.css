@@ -10,6 +10,9 @@ a{
     text-decoration: none;
     color: #fff;
 }
+.text-primary{
+  color: rgb(8, 100, 256);
+}
 .container{
     border-radius: 3px;
     border: solid 1px #fffaaa;
@@ -118,6 +121,15 @@ nav hr{
     text-align: left;
     font-weight: 600;
 }
+.sticker input{
+    color: #444;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 1px 1px 4px rgb(8, 100, 256);
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 5px;
+}
 .content{
     white-space: wrap;
     overflow: hidden;
@@ -207,6 +219,15 @@ textarea{
 }
 .middle-box button:hover{
     color: #000;
+}
+.sticker button{
+    background-color: rgb(8, 100, 256);
+    color: #fff;
+    width: 100%;
+    height: 30px;
+    font-size: 18px;
+    border-radius: 5px;
+    margin-top: 10px;
 }
 @media screen and (max-width: 992px){
     .container{
