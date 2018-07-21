@@ -59,3 +59,26 @@ describe('POST an Entry', () => {
 });
 
 });
+describe('UPDATE an Entry', () => {
+
+  it('should Update an Entry', (done) => {
+
+    chai.request(server).
+      put('/api/v1/entry/1').
+      send({
+        content: 'I went to the cinema at Maryland to see - The Dragons, ' +
+        'I was really awesome and I enjoyed myself. I think I should ' +
+        'create more time to see the movies.',
+        title: 'cinema'
+      }).
+      end((err, res) => {
+
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        done();
+
+});
+
+});
+
+});
