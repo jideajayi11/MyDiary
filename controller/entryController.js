@@ -114,5 +114,29 @@ return res.status(404).json({
 
 }
 
+static deleteEntry (req, res) {
+
+  const entry = entryModel.
+  filter((item) => item.id === parseInt(req.params.id, 10));
+  const index = entryModel.
+  findIndex((item) => item.id === parseInt(req.params.id, 10));
+  if (index >= 0) {
+
+    entryModel.splice(index, 1);
+
+return res.status(200).json({
+      entry,
+      message: 'Entry was deleted'
+    });
+
+}
+
+return res.status(404).json({
+    error: 404,
+    message: 'Entry not found'
+  });
+
+}
+
 }
 export default Entry;
