@@ -2,6 +2,25 @@ import userModel from '../model/userModel';
 
 class Time {
 
+    static getTime (req, res) {
+
+        const id = parseInt(req.params.id, 10);
+        const user = userModel.filter((item) => item.id === id);
+        if (user.length > 0) {
+    
+          return res.status(200).json({
+            user
+          });
+    
+    }
+    
+          return res.status(404).json({
+            error: 404,
+            message: 'User id not found'
+          });
+    
+      }
+      
     static setTime (req, res) {
 
         const user = userModel.
@@ -37,6 +56,6 @@ class Time {
         });
     
       }
-      
+
 }
 export default Time;

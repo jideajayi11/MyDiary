@@ -5,6 +5,22 @@ import server from '../bin/www';
 const should = chai.should();
 chai.use(chaiHttp);
 
+describe('GET Time', () => {
+
+    it('should GET the reminder time', (done) => {
+  
+      chai.request(server).
+        get('/api/v1/reminder/1').
+        end((err, res) => {
+  
+          res.should.have.status(200);
+          done();
+  
+  });
+  
+  });
+  
+  });
 
 describe('UPDATE Time', () => {
 
