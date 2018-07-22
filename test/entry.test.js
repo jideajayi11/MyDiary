@@ -82,3 +82,19 @@ describe('UPDATE an Entry', () => {
 });
 
 });
+describe('DELETE an Entry', () => {
+
+  it('should Delete an Entry', (done) => {
+
+    chai.request(server).
+      delete('/api/v1/entry/1').
+      end((err, res) => {
+
+        res.should.have.status(200);
+        done();
+
+});
+
+});
+
+});
