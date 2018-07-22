@@ -37,3 +37,25 @@ describe('GET an Entry', () => {
 });
 
 });
+describe('POST an Entry', () => {
+
+  it('should add a new Entry', (done) => {
+
+    chai.request(server).
+      post('/api/v1/entry').
+      send({
+        content: 'Show me a man who thinks he does not need to keep ' +
+        'adding values to himself and I will show you an unwise man',
+        title: 'seek values'
+      }).
+      end((err, res) => {
+
+        res.should.have.status(201);
+        res.body.should.be.a('object');
+        done();
+
+});
+
+});
+
+});

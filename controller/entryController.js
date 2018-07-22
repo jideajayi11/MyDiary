@@ -45,6 +45,35 @@ return res.status(404).json({
 
 }
 
+static addEntry (req, res) {
+
+  if (req.body.title === undefined || req.body.content === undefined) {
+
+    return res.status(400).json({
+      error: 400,
+      message: 'Incomplete parameters'
+    });
+
+}
+  const lastId = entryModel[entryModel.length - 1].id;
+  const id = parseInt(lastId, 10) + 1;
+  const dateAdded = Date.now();
+  entryModel.push({
+    content: req.body.content,
+    dateAdded,
+    id,
+    title: req.body.title
+  });
+
+return res.status(201).json({
+    id,
+    title: req.body.title,
+    content: req.body.content,
+    dateAdded,
+    message: 'new entry added'
+  });
+
+}
 
 }
 export default Entry;
