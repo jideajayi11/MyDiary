@@ -21,3 +21,19 @@ describe('GET all Entries', () => {
 });
 
 });
+describe('GET an Entry', () => {
+
+  it('should GET a particular Entry given its id', (done) => {
+
+    chai.request(server).
+      get('/api/v1/entry/1').
+      end((err, res) => {
+
+        res.should.have.status(200);
+        done();
+
+});
+
+});
+
+});
