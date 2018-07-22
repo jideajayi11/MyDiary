@@ -35,6 +35,18 @@ describe('GET an Entry', () => {
 });
 
 });
+it('should return Not Found when id=0', (done) => {
+
+  chai.request(server).
+    get('/api/v1/entry/0').
+    end((err, res) => {
+
+      res.should.have.status(404);
+      done();
+
+});
+
+});
 
 });
 describe('POST an Entry', () => {
@@ -53,6 +65,52 @@ describe('POST an Entry', () => {
         res.should.have.status(201);
         res.body.should.be.a('object');
         done();
+
+});
+
+});
+it('should return Bad Request when only Content is passed to body', 
+(done) => {
+
+  chai.request(server).
+    post('/api/v1/entry').
+    send({
+      content: 'Show me a man who thinks he does not need to keep ' +
+      'adding values to himself and I will show you an unwise man'
+    }).
+    end((err, res) => {
+
+      res.should.have.status(400);
+      done();
+
+});
+
+});
+it('should return Bad Request when only Title is passed to body', 
+(done) => {
+
+  chai.request(server).
+    post('/api/v1/entry').
+    send({
+      title: 'seek values'
+    }).
+    end((err, res) => {
+
+      res.should.have.status(400);
+      done();
+
+});
+
+});
+it('should return Bad Request when Nothing is passed to body', 
+(done) => {
+
+  chai.request(server).
+    post('/api/v1/entry').
+    end((err, res) => {
+
+      res.should.have.status(400);
+      done();
 
 });
 
@@ -80,6 +138,18 @@ describe('UPDATE an Entry', () => {
 });
 
 });
+it('should return Not Found when id=0', (done) => {
+
+  chai.request(server).
+    put('/api/v1/entry/0').
+    end((err, res) => {
+
+      res.should.have.status(404);
+      done();
+
+});
+
+});
 
 });
 describe('DELETE an Entry', () => {
@@ -92,6 +162,18 @@ describe('DELETE an Entry', () => {
 
         res.should.have.status(200);
         done();
+
+});
+
+});
+it('should return Not Found when id=0', (done) => {
+
+  chai.request(server).
+  delete('/api/v1/entry/0').
+    end((err, res) => {
+
+      res.should.have.status(404);
+      done();
 
 });
 

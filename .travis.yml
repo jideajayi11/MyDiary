@@ -1,0 +1,29 @@
+language: node_js
+node_js:
+  - 8.11.1
+env:
+  global:
+    - CC_TEST_REPORTER_ID: "ad5a62aa209665eb8814dc8995cd022d2a889e1ab174cb8e5f5a934bb95eb10f"
+cache:
+yarn: true
+  directories:
+    - node_modules
+branches:
+  only:
+  - develop
+code_climate:
+    repo_token:"ad5a62aa209665eb8814dc8995cd022d2a889e1ab174cb8e5f5a934bb95eb10f"
+script:
+  - yarn test
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.5.1
+  - export PATH="$HOME/.yarn/bin:$PATH"
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+after_success:
+  - npm run coverage
+  - npm run coveralls
