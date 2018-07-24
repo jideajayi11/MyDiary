@@ -19,7 +19,7 @@ class Entry {
 
 }
 
-return res.status(404).json({
+return res.status(400).json({
       error: 400,
       message: 'Bad request'
     });
@@ -66,10 +66,7 @@ static addEntry (req, res) {
   });
 
 return res.status(201).json({
-    id,
-    title: req.body.title,
-    content: req.body.content,
-    dateAdded,
+  entryModel,
     message: 'new entry added'
   });
 
@@ -101,7 +98,7 @@ static updateEntry (req, res) {
     });
 
 return res.status(200).json({
-      entry,
+  entryModel,
       message: 'Entry updated'
     });
 
@@ -115,9 +112,10 @@ return res.status(404).json({
 }
 
 static deleteEntry (req, res) {
-
-  const entry = entryModel.
-  filter((item) => item.id === parseInt(req.params.id, 10));
+/*
+ *const entry = entryModel.
+ *filter((item) => item.id === parseInt(req.params.id, 10));
+ */
   const index = entryModel.
   findIndex((item) => item.id === parseInt(req.params.id, 10));
   if (index >= 0) {
@@ -125,7 +123,7 @@ static deleteEntry (req, res) {
     entryModel.splice(index, 1);
 
 return res.status(200).json({
-      entry,
+  entryModel,
       message: 'Entry was deleted'
     });
 

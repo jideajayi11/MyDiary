@@ -14,6 +14,8 @@ describe('GET Time', () => {
         end((err, res) => {
 
           res.should.have.status(200);
+          res.body.should.be.a('object');
+          res.body.user[0].should.have.property('id').equal(1);
           done();
 
   });
@@ -26,6 +28,9 @@ describe('GET Time', () => {
       end((err, res) => {
 
         res.should.have.status(404);
+        res.body.should.be.a('object');
+        res.body.should.have.property('error').equal(404);
+        res.body.should.have.property('message').equal('User id not found');
         done();
 
 });
@@ -47,6 +52,7 @@ describe('UPDATE Time', () => {
 
           res.should.have.status(200);
           res.body.should.be.a('object');
+          res.body.should.have.property('message').equal('Time updated');
           done();
 
   });
@@ -59,6 +65,9 @@ describe('UPDATE Time', () => {
       end((err, res) => {
 
         res.should.have.status(404);
+        res.body.should.be.a('object');
+        res.body.should.have.property('error').equal(404);
+        res.body.should.have.property('message').equal('User id not found');
         done();
 
 });

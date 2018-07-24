@@ -44,7 +44,7 @@ class Time {
           });
 
     return res.status(200).json({
-            message: 'Entry updated',
+            message: 'Time updated',
             user
           });
 
@@ -52,7 +52,7 @@ class Time {
 
     return res.status(404).json({
           error: 404,
-          message: 'Entry not found'
+          message: 'User id not found'
         });
 
       }
