@@ -14,6 +14,14 @@ describe('GET all Entries', () => {
       end((err, res) => {
 
         res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.entryModel[0].should.have.property('id').equal(1);
+        res.body.entryModel[0].should.have.property('title').equal('The Dragons');
+        res.body.entryModel[0].should.have.property('dateAdded').equal('2018-07-20');
+        res.body.entryModel[0].should.have.
+        property('content').equal('I went to the cinema to see - The Dragons, I was ' +
+        'really awesome and I enjoyed myself. I think I ' +
+        'should create more time to see the movies.');
         done();
 
 });
@@ -30,6 +38,14 @@ describe('GET an Entry', () => {
       end((err, res) => {
 
         res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.entry[0].should.have.property('id').equal(1);
+        res.body.entry[0].should.have.property('title').equal('The Dragons');
+        res.body.entry[0].should.have.property('dateAdded').equal('2018-07-20');
+        res.body.entry[0].should.have.
+        property('content').equal('I went to the cinema to see - The Dragons, I was ' +
+        'really awesome and I enjoyed myself. I think I ' +
+        'should create more time to see the movies.');
         done();
 
 });
@@ -42,6 +58,9 @@ it('should return Not Found when id=0', (done) => {
     end((err, res) => {
 
       res.should.have.status(404);
+      res.body.should.be.a('object');
+      res.body.should.have.property('error').equal(404);
+      res.body.should.have.property('message').equal('Entry id not found');
       done();
 
 });
@@ -81,6 +100,9 @@ it('should return Bad Request when only Content is passed to body',
     end((err, res) => {
 
       res.should.have.status(400);
+      res.body.should.be.a('object');
+      res.body.should.have.property('error').equal(400);
+      res.body.should.have.property('message').equal('Incomplete parameters');
       done();
 
 });
@@ -97,6 +119,9 @@ it('should return Bad Request when only Title is passed to body',
     end((err, res) => {
 
       res.should.have.status(400);
+      res.body.should.be.a('object');
+      res.body.should.have.property('error').equal(400);
+      res.body.should.have.property('message').equal('Incomplete parameters');
       done();
 
 });
@@ -110,6 +135,9 @@ it('should return Bad Request when Nothing is passed to body',
     end((err, res) => {
 
       res.should.have.status(400);
+      res.body.should.be.a('object');
+      res.body.should.have.property('error').equal(400);
+      res.body.should.have.property('message').equal('Incomplete parameters');
       done();
 
 });
@@ -133,6 +161,15 @@ describe('UPDATE an Entry', () => {
 
         res.should.have.status(200);
         res.body.should.be.a('object');
+        res.body.entryModel[0].should.have.property('id').equal(1);
+        res.body.entryModel[0].should.have.property('title').equal('cinema');
+        res.body.entryModel[0].should.have.property('dateAdded').equal('2018-07-20');
+        res.body.entryModel[0].should.have.
+        property('content').equal('I went to the cinema at Maryland to see - The Dragons, ' +
+        'I was really awesome and I enjoyed myself. I think I should ' +
+        'create more time to see the movies.');
+        res.body.should.have.property('message').equal('Entry updated');
+        
         done();
 
 });
@@ -145,6 +182,9 @@ it('should return Not Found when id=0', (done) => {
     end((err, res) => {
 
       res.should.have.status(404);
+      res.body.should.be.a('object');
+      res.body.should.have.property('error').equal(404);
+      res.body.should.have.property('message').equal('Entry not found');
       done();
 
 });
@@ -161,6 +201,8 @@ describe('DELETE an Entry', () => {
       end((err, res) => {
 
         res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('message').equal('Entry was deleted');
         done();
 
 });
@@ -173,6 +215,9 @@ it('should return Not Found when id=0', (done) => {
     end((err, res) => {
 
       res.should.have.status(404);
+      res.body.should.be.a('object');
+      res.body.should.have.property('error').equal(404);
+      res.body.should.have.property('message').equal('Entry not found');
       done();
 
 });
