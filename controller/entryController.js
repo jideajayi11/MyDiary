@@ -47,7 +47,7 @@ return res.status(404).json({
 
 static addEntry (req, res) {
 
-  if (req.body.title === undefined || req.body.content === undefined) {
+  if (!(req.body.title) || !(req.body.content)) {
 
     return res.status(400).json({
       error: 400,
@@ -76,12 +76,12 @@ static updateEntry (req, res) {
 
   const entry = entryModel.
   filter((item) => item.id === parseInt(req.params.id, 10));
-  if (req.body.title !== undefined) {
+  if (req.body.title) {
 
     entry[0].title = req.body.title;
 
 }
-  if (req.body.content !== undefined) {
+  if (req.body.content) {
 
     entry[0].content = req.body.content;
 

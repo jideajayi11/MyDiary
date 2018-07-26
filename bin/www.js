@@ -4,16 +4,15 @@ import env from 'dotenv';
 
 env.config();
 
-/*
- *Const port = parseInt(process.env.PORT, 10) || 3000;
- */
-const port = 3000;
+
+const port = parseInt(process.env.PORT, 10) || 3000;
+
 app.set('port', port);
 
 const server = http.createServer(app);
 server.listen(port);
 
-/*
- * Console.log('connected to port');
- */
+
+console.log('connected to port');
+
 export default server;
