@@ -26,5 +26,33 @@ class Auth{
       });
     }
     
+    static authUsers (req, res) {
+      const user = userModel.
+      filter((item) => item.email === req.body.email);
+      if (user.length) {
+        if(user[0].password === req.body.password) {
+          /*const token = jwt.sign({email: req.body.email}, 
+            'superSecret');*/
+          return res.status(200).json({
+            user,
+            message: 'Logged in'
+          });
+          
+        }else {
+          return res.status(404).json({ 
+            error: 404, 
+            message: 'Authentication failed. Invalid password.' 
+          });
+        }
+        
+      }else {
+        return res.status(404).json({ 
+          error: 404, 
+          message: 'Authentication failed. User not found.' 
+        });
+      }
+      
+
+    }
 }
 export default Auth;
