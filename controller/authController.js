@@ -1,4 +1,5 @@
 import db from '../db';
+import config from '../config';
 import jwt from 'jsonwebtoken';
 
 
@@ -31,8 +32,8 @@ class Auth{
 
     static addUser (req, res, next) {
       db.none('insert into users(id, fullName, email, password, reminderTime)' +
-        'values(DEFAULT, ${fullName}, ${email}, ${password}, "7:00am")',
-      req.body)
+        'values(DEFAULT, $1, $2, $3, $4)',
+      [req.body.fullName, req.body.email, req.body.password, '7:00am'])
       .then(function () {
         res.status(201)
           .json({
@@ -69,7 +70,7 @@ class Auth{
       if (user.length) {
         if(user[0].password === req.body.password) {
           const token = jwt.sign({email: req.body.email}, 
-            'superSecret');
+            config.mySecret);
           return res.status(200).json({
             user,
             token,

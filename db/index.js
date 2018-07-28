@@ -1,4 +1,5 @@
 import promise from "bluebird";
+import config from '../config';
 
 const options = {
   promiseLib: promise
@@ -12,5 +13,5 @@ const pgp = require('pg-promise')(options);
   user: 'postgres',
   password: 'root'
 });*/
-const db = pgp('postgres://rovcdyoj:J91nTzpkuI7hO7PxH0qR3TjGMT0PZEwF@pellefant.db.elephantsql.com:5432/rovcdyoj');
+const db = pgp(config.db);
 export default db;
