@@ -31,7 +31,7 @@ class Auth{
 
     static addUser (req, res, next) {
       db.none('insert into users(id, fullName, email, password, reminderTime)' +
-        'values(DEFAULT, ${fullName}, ${email}, ${password}, ${reminderTime})',
+        'values(DEFAULT, ${fullName}, ${email}, ${password}, "7:00am")',
       req.body)
       .then(function () {
         res.status(201)
