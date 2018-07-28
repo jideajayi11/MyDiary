@@ -1,7 +1,10 @@
-import userModel from '../model/userModel';
+import db from '../db';
+import jwt from 'jsonwebtoken';
+
 
 class Auth{
 
+  /*
     static addUser (req, res) {
       if (!(req.body.email) || !(req.body.fullName) || !(req.body.password)) {
         return res.status(400).json({
@@ -24,17 +27,52 @@ class Auth{
         userModel,
         message: 'new user added'
       });
+    }*/
+
+    static addUser (req, res, next) {
+      db.none('insert into users(id, fullName, email, password, reminderTime)' +
+        'values(DEFAULT, ${fullName}, ${email}, ${password}, ${reminderTime})',
+      req.body)
+      .then(function () {
+        res.status(201)
+          .json({
+            status: 'success',
+            message: 'Inserted one user'
+          });
+      })
+      .catch(function (err) {
+        return next(err);
+      });
     }
+
+    /*
+    static getUsers (req, res, next) {
+      db.any('select * from users')
+    .then(function (data) {
+      res.status(200)
+        .json({
+          status: 'success',
+          data: data,
+          message: 'Fetched All Users'
+        });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+    }
+    */
     
     static authUsers (req, res) {
-      const user = userModel.
-      filter((item) => item.email === req.body.email);
+      db.any('select * from users')
+      .then(function (data) {
+      const user = data.filter((item) => item.email === req.body.email);
       if (user.length) {
         if(user[0].password === req.body.password) {
-          /*const token = jwt.sign({email: req.body.email}, 
-            'superSecret');*/
+          const token = jwt.sign({email: req.body.email}, 
+            'superSecret');
           return res.status(200).json({
             user,
+            token,
             message: 'Logged in'
           });
           
@@ -51,8 +89,24 @@ class Auth{
           message: 'Authentication failed. User not found.' 
         });
       }
+    });
       
 
+    }
+
+    static updateUsers (req, res, next) {
+      db.none('update users set fullName=$1 ' +
+        'where id=$2', [req.body.fullName, req.params.id])
+        .then(function () {
+          res.status(200)
+          .json({
+            status: 'success',
+            message: 'Updated Full Name'
+          });
+        })
+        .catch(function (err) {
+          return next(err);
+        });
     }
 }
 export default Auth;

@@ -34,11 +34,15 @@
   "homepage": "https://github.com/jideajayi11/MyDiary#readme",
   "dependencies": {
     "babel-core": "^6.26.3",
+    "bluebird": "^3.5.1",
     "body-parser": "^1.18.3",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
     "morgan": "^1.9.0",
-    "nodemon": "^1.18.2"
+    "nodemon": "^1.18.2",
+    "pg": "^7.4.3",
+    "pg-promise": "^8.4.5"
   },
   "devDependencies": {
     "ajv": "^5.0.0",

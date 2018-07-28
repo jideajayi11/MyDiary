@@ -1,7 +1,8 @@
 import userModel from '../model/userModel';
+import db from '../db';
 
 class Time {
-
+    /*
     static getTime (req, res) {
 
         const id = parseInt(req.params.id, 10);
@@ -19,43 +20,36 @@ class Time {
             message: 'User id not found'
           });
 
-      }
+    }*/
 
-    static setTime (req, res) {
-
-        const user = userModel.
-        filter((item) => item.id === parseInt(req.params.id, 10));
-        if (req.body.time !== undefined) {
-
-          user[0].reminderTime = req.body.time;
-
-    }
-        const index = userModel.
-        findIndex((item) => item.id === parseInt(req.params.id, 10));
-        if (index >= 0) {
-
-          userModel.splice(index, 1, {
-            dateAdded: user[0].dateAdded,
-            email: user[0].email,
-            fullName: user[0].fullName,
-            id: user[0].id,
-            password: user[0].password,
-            reminderTime: user[0].reminderTime
+    static getTime (req, res, next) {
+      db.one('select remindertime from users where id = $1', [req.params.id])
+      .then(function (time) {
+        res.status(200)
+          .json({
+            status: 'success',
+            time,
+            message: 'Get Time'
           });
-
-    return res.status(200).json({
-            message: 'Time updated',
-            user
-          });
-
+      })
+      .catch(function (err) {
+        return next(err);
+      });
     }
 
-    return res.status(404).json({
-          error: 404,
-          message: 'User id not found'
+    static setTime (req, res, next) {
+      db.none('update users set reminderTime=$1 ' +
+      'where id=$2', [req.body.remindertime, req.params.id])
+      .then(function () {
+        res.status(200)
+        .json({
+          status: 'success',
+          message: 'Updated Reminder Time'
         });
-
-      }
-
+      })
+      .catch(function (err) {
+        return next(err);
+      });
+    }
 }
 export default Time;
