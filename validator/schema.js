@@ -15,7 +15,8 @@ const newUser = Joi.object().keys({
   confirmPassword: Joi.string().valid(Joi.ref('password')).required().strict()
 });
 const login = Joi.object().keys({
-  email: Joi.string().email().lowercase().required()
+  email: Joi.string().email().lowercase().required(),
+  password: Joi.string().min(5).required().strict()
 });
 const updateUser = Joi.object().keys({
   fullName: Joi.string().required()
