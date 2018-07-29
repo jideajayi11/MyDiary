@@ -32,24 +32,35 @@ class Auth{
     }*/
 
     static addUser (req, res, next) {
-      bcrypt.genSalt(10, function(err, salt) {
-        bcrypt.hash(req.body.password, salt, function(err, hash) {
-          db.none('insert into users(id, fullName, email, password, reminderTime)' +
-        'values(DEFAULT, $1, $2, $3, $4)',
-          [req.body.fullName, req.body.email, hash, '7:00am'])
-          .then(function () {
-            res.status(201)
-              .json({
-                status: 'success',
-                message: 'Inserted one user',
-                key: hash
+      db.result('select email from users where email = $1', req.body.email)
+      .then(function (data) {
+        if(!data.rowCount) {
+          bcrypt.genSalt(10, function(err, salt) {
+            bcrypt.hash(req.body.password, salt, function(err, hash) {
+              db.none('insert into users(id, fullName, email, password, reminderTime)' +
+            'values(DEFAULT, $1, $2, $3, $4)',
+              [req.body.fullName, req.body.email, hash, '7:00am'])
+              .then(function () {
+                res.status(201)
+                  .json({
+                    status: 'success',
+                    message: 'Inserted one user'
+                  });
+              })
+              .catch(function (err) {
+                return next(err);
               });
-          })
-          .catch(function (err) {
-            return next(err);
+            });
           });
-        });
+        }else {
+          res.status(403)
+          .json({
+            status: 'error',
+            message: 'Email already exist'
+          });
+        }
       });
+      
     }
 
     /*
