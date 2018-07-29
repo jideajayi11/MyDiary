@@ -1,34 +1,31 @@
 import chai from 'chai';
+import {expect} from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../bin/www';
+import jwt from 'jsonwebtoken';
+import config from '../config';
 
 const should = chai.should();
 chai.use(chaiHttp);
+const token = jwt.sign({email: 'jide@ajayi.co'}, 
+  config.mySecret, {expiresIn: 86400});
 
 describe('GET all Entries', () => {
 
   it('should Get all Entries', (done) => {
 
     chai.request(server).
-      get('/api/v1/entries').
+      get('/api/v1/entries/6').
+      set('x-access-token', token).
       end((err, res) => {
-
-        res.should.have.status(200);
-        res.body.should.be.a('object');
-        res.body.entryModel[0].should.have.property('id').equal(1);
-        res.body.entryModel[0].should.have.property('title').equal('The Dragons');
-        res.body.entryModel[0].should.have.property('dateAdded').equal('2018-07-20');
-        res.body.entryModel[0].should.have.
-        property('content').equal('I went to the cinema to see - The Dragons, I was ' +
-        'really awesome and I enjoyed myself. I think I ' +
-        'should create more time to see the movies.');
+        expect(res.status).to.equal(200);
         done();
-
 });
 
 });
 
 });
+
 describe('GET an Entry', () => {
 
   it('should GET a particular Entry given its id', (done) => {

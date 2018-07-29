@@ -1,6 +1,7 @@
 import db from '../db';
 import config from '../config';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 
 
 class Auth{
@@ -31,18 +32,23 @@ class Auth{
     }*/
 
     static addUser (req, res, next) {
-      db.none('insert into users(id, fullName, email, password, reminderTime)' +
+      bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(req.body.password, salt, function(err, hash) {
+          db.none('insert into users(id, fullName, email, password, reminderTime)' +
         'values(DEFAULT, $1, $2, $3, $4)',
-      [req.body.fullName, req.body.email, req.body.password, '7:00am'])
-      .then(function () {
-        res.status(201)
-          .json({
-            status: 'success',
-            message: 'Inserted one user'
+          [req.body.fullName, req.body.email, hash, '7:00am'])
+          .then(function () {
+            res.status(201)
+              .json({
+                status: 'success',
+                message: 'Inserted one user',
+                key: hash
+              });
+          })
+          .catch(function (err) {
+            return next(err);
           });
-      })
-      .catch(function (err) {
-        return next(err);
+        });
       });
     }
 
@@ -68,22 +74,23 @@ class Auth{
       .then(function (data) {
       const user = data.filter((item) => item.email === req.body.email);
       if (user.length) {
-        if(user[0].password === req.body.password) {
-          const token = jwt.sign({email: req.body.email}, 
-            config.mySecret);
-          return res.status(200).json({
-            user,
-            token,
-            message: 'Logged in'
-          });
-          
-        }else {
-          return res.status(404).json({ 
-            error: 404, 
-            message: 'Authentication failed. Invalid password.' 
-          });
-        }
-        
+        bcrypt.compare(req.body.password, user[0].password, function(err, result) {
+          if(result) {
+            const token = jwt.sign({email: req.body.email}, 
+              config.mySecret, {expiresIn: 86400});
+            return res.status(200).json({
+              user,
+              token,
+              message: 'Logged in'
+            });
+            
+          }else {
+            return res.status(404).json({ 
+              error: 404, 
+              message: 'Authentication failed. Invalid password.' 
+            });
+          }
+        });
       }else {
         return res.status(404).json({ 
           error: 404, 
