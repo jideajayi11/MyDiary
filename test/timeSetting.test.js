@@ -1,9 +1,14 @@
+import {expect} from 'chai';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../bin/www';
+import jwt from 'jsonwebtoken';
+import config from '../config';
 
 const should = chai.should();
 chai.use(chaiHttp);
+const token = jwt.sign({email: 'jide@ajayi.co'}, 
+  config.mySecret, {expiresIn: 86400});
 
 describe('GET Time', () => {
 
@@ -11,31 +16,19 @@ describe('GET Time', () => {
 
       chai.request(server).
         get('/api/v1/reminder/1').
+        set('x-access-token', token).
         end((err, res) => {
 
           res.should.have.status(200);
           res.body.should.be.a('object');
-          res.body.user[0].should.have.property('id').equal(1);
+          expect(res.body).to.have.property('status').equal('success');
+          expect(res.body).to.have.property('message').equal('Get Time');
+          res.body.time.should.have.property('remindertime').equal('07:00:00');
           done();
 
   });
 
   });
-  it('should return Not Found when id=0', (done) => {
-
-    chai.request(server).
-      get('/api/v1/reminder/0').
-      end((err, res) => {
-
-        res.should.have.status(404);
-        res.body.should.be.a('object');
-        res.body.should.have.property('error').equal(404);
-        res.body.should.have.property('message').equal('User id not found');
-        done();
-
-});
-
-});
 
   });
 
@@ -45,34 +38,21 @@ describe('UPDATE Time', () => {
 
       chai.request(server).
         put('/api/v1/reminder/1').
+        set('x-access-token', token).
         send({
-          reminderTime: '07:00 am'
+          remindertime: '07:00:00'
         }).
         end((err, res) => {
 
           res.should.have.status(200);
           res.body.should.be.a('object');
-          res.body.should.have.property('message').equal('Time updated');
+          res.body.should.have.property('status').equal('success');
+          res.body.should.have.property('message').equal('Updated Reminder Time');
           done();
 
   });
 
   });
-  it('should return Not Found when id=0', (done) => {
-
-    chai.request(server).
-    put('/api/v1/reminder/0').
-      end((err, res) => {
-
-        res.should.have.status(404);
-        res.body.should.be.a('object');
-        res.body.should.have.property('error').equal(404);
-        res.body.should.have.property('message').equal('User id not found');
-        done();
-
-});
-
-});
 
   });
   

@@ -1,17 +1,19 @@
 import promise from "bluebird";
 import config from '../config';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const options = {
   promiseLib: promise
 };
 
 const pgp = require('pg-promise')(options);
-/*const db = pgp({
-  host: 'localhost',
-  port: 5432,
-  database: 'mydiary',
-  user: 'postgres',
-  password: 'root'
-});*/
-const db = pgp(config.db);
+
+let db;
+if(process.env.NODE_ENV === 'test') {
+  db = pgp(process.env.DB_PATH_TEST);
+}else {
+  db = pgp(process.env.DB_PATH);
+}
 export default db;

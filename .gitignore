@@ -3,3 +3,5 @@
 /config
 /coverage
 /.nyc_output
+/.env
+/.env.default

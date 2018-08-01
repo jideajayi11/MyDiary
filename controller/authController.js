@@ -97,20 +97,18 @@ class Auth{
             
           }else {
             return res.status(404).json({ 
-              error: 404, 
+              status: 'error',
               message: 'Authentication failed. Invalid password.' 
             });
           }
         });
       }else {
         return res.status(404).json({ 
-          error: 404, 
+          status: 'error',
           message: 'Authentication failed. User not found.' 
         });
       }
     });
-      
-
     }
 
     static updateUsers (req, res, next) {

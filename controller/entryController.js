@@ -130,7 +130,7 @@ static addEntry (req, res, next) {
 }
 
 
-static updateEntry (req, res) {
+static updateEntry (req, res, next) {
   db.none('update entries set content=$1 ' +
     'where id=$2 AND userid=$3', [req.body.content, req.params.id, req.params.userid])
     .then(function () {
@@ -159,6 +159,8 @@ static deleteEntry (req, res, next) {
       return next(err);
     });
 }
+
+
 /*
 static deleteEntry (req, res) {
 
