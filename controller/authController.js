@@ -1,35 +1,11 @@
 import db from '../db';
-import config from '../config';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
+const LocalStorage = require('node-localstorage').LocalStorage;
+const localStorage = new LocalStorage('./scratch');
 
 class Auth{
-
-  /*
-    static addUser (req, res) {
-      if (!(req.body.email) || !(req.body.fullName) || !(req.body.password)) {
-        return res.status(400).json({
-          error: 400,
-          message: 'Incomplete parameters'
-        });
-      }
-      const lastId = userModel[userModel.length - 1].id;
-      //const id = parseInt(lastId, 10) + 1;
-      const dateAdded = Date.now();
-      userModel.push({
-        email: req.body.email,
-        fullName: req.body.fullName,
-        password: req.body.password,
-        dateAdded,
-        id: parseInt(lastId, 10) + 1,
-        reminderTime: '07:00 am'
-      });
-      return res.status(201).json({
-        userModel,
-        message: 'new user added'
-      });
-    }*/
 
     static addUser (req, res, next) {
       db.result('select email from users where email = $1', req.body.email)
@@ -41,6 +17,14 @@ class Auth{
             'values(DEFAULT, $1, $2, $3, $4)',
               [req.body.fullName, req.body.email, hash, '7:00am'])
               .then(function () {
+                db.one('select id from users where email = $1', req.body.email)
+                .then(function (data2) {
+                  const token = jwt.sign({email: req.body.email, userId: data2.id}, 
+                    process.env.JWT_KEY, {expiresIn: 86400});
+                  localStorage.setItem('myDiaryToken', token);
+                });
+                
+               // res.header('x-auth-token', token).status(201)
                 res.status(201)
                   .json({
                     status: 'success',
@@ -48,7 +32,7 @@ class Auth{
                   });
               })
               .catch(function (err) {
-                return next(err);
+                //return next(err);
               });
             });
           });
@@ -63,22 +47,6 @@ class Auth{
       
     }
 
-    /*
-    static getUsers (req, res, next) {
-      db.any('select * from users')
-    .then(function (data) {
-      res.status(200)
-        .json({
-          status: 'success',
-          data: data,
-          message: 'Fetched All Users'
-        });
-    })
-    .catch(function (err) {
-      return next(err);
-    });
-    }
-    */
     
     static authUsers (req, res) {
       db.any('select * from users')
@@ -87,11 +55,12 @@ class Auth{
       if (user.length) {
         bcrypt.compare(req.body.password, user[0].password, function(err, result) {
           if(result) {
-            const token = jwt.sign({email: req.body.email}, 
-              config.mySecret, {expiresIn: 86400});
+            const userId = user[0].id;
+            const token = jwt.sign({email: req.body.email, userId: userId}, 
+              process.env.JWT_KEY, {expiresIn: 86400});
+            localStorage.setItem('myDiaryToken', token);
             return res.status(200).json({
-              user,
-              token,
+              status: 'success',
               message: 'Logged in'
             });
             
@@ -111,19 +80,5 @@ class Auth{
     });
     }
 
-    static updateUsers (req, res, next) {
-      db.none('update users set fullName=$1 ' +
-        'where id=$2', [req.body.fullName, req.params.id])
-        .then(function () {
-          res.status(200)
-          .json({
-            status: 'success',
-            message: 'Updated Full Name'
-          });
-        })
-        .catch(function (err) {
-          return next(err);
-        });
-    }
 }
 export default Auth;

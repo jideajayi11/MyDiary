@@ -3,12 +3,11 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../bin/www';
 import jwt from 'jsonwebtoken';
-import config from '../config';
 
 const should = chai.should();
 chai.use(chaiHttp);
-const token = jwt.sign({email: 'jide@ajayi.co'}, 
-  config.mySecret, {expiresIn: 86400});
+const token = jwt.sign({email: 'jide11@gmail.com', userId: 1}, 
+process.env.JWT_KEY, {expiresIn: 86400});
 
 describe('GET Time', () => {
 
@@ -55,4 +54,26 @@ describe('UPDATE Time', () => {
   });
 
   });
-  
+
+  describe('UPDATE User', () => {
+
+    it('should Update the user full name', (done) => {
+
+      chai.request(server).
+        put('/api/v1/updateUsers/1').
+        set('x-access-token', token).
+        send({
+          fullName: 'Jide Unl'
+        }).
+        end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+          res.body.should.have.property('status').equal('success');
+          res.body.should.have.property('message').equal('Updated Full Name');
+          done();
+
+  });
+
+  });
+
+  });

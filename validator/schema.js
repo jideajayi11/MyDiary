@@ -22,7 +22,7 @@ const updateUser = Joi.object().keys({
   fullName: Joi.string().required()
 });
 const updateTime = Joi.object().keys({
-  remindertime: Joi.date().timestamp().required()
+  remindertime: Joi.required()
 });
 
 export default {

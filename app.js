@@ -2,14 +2,12 @@ import bodyParser from 'body-parser';
 import entryRoute from './routes/entryRoute';
 import express from 'express';
 import logger from 'morgan';
-import timeSettingRoute from './routes/timeSettingRoute';
+import userRoute from './routes/userRoute';
 import authRoute from './routes/authRoute';
-import updateUserRoute from './routes/updateUserRoute';
-import createTable from './db/createTable';
-import config from './config';
 import jwt from 'jsonwebtoken';
 
-
+const LocalStorage = require('node-localstorage').LocalStorage;
+const localStorage = new LocalStorage('./scratch');
 
 const app = express();
 app.use(logger('dev'));
@@ -25,9 +23,17 @@ authRoute(app);
 //Authenticate routes after this function
 
 app.use(function(req, res, next) {
-  const token = req.body.token || req.query.token || req.headers['x-access-token'];
+  let token;
+  if(process.env.NODE_ENV === 'test') {
+    token = req.headers['x-access-token'];
+    //console.log(process.env.NODE_ENV, 'NODE_ENV1');
+  }else {
+    token = localStorage.getItem('myDiaryToken');
+    //console.log(process.env.NODE_ENV, 'NODE_ENV2');
+  }
+  //const token = localStorage.getItem('myDiaryToken') || req.body.token || req.query.token || req.headers['x-access-token'];
   if (token) {
-    jwt.verify(token, config.mySecret, function(err, decoded) {      
+    jwt.verify(token, process.env.JWT_KEY, function(err, decoded) {      
       if (err) {
         return res.json({ success: false, message: 'Failed to authenticate token.' });    
       } else {
@@ -48,10 +54,9 @@ app.use(function(req, res, next) {
   }
 });
 
-updateUserRoute(app);
 entryRoute(app);
-timeSettingRoute(app);
-//createTable();
+userRoute(app);
+
 export default app;
 
 

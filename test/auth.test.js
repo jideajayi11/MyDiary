@@ -34,7 +34,7 @@ describe('Signup a User', () => {
     chai.request(server).
       post('/api/v1/auth/signup').
       send({
-        email: 'jide@gmail.com',
+        email: 'jide11@gmail.com',
         fullName: 'jide Dee',
         password: 'seekvalues',
         confirmPassword: 'seekvalues'
@@ -59,13 +59,14 @@ describe('Signup a User', () => {
       chai.request(server).
         post('/api/v1/auth/login').
         send({
-          email: 'jide@gmail.com',
+          email: 'jide11@gmail.com',
           password: 'seekvalues'
         }).
         end((err, res) => {
   
           res.should.have.status(200);
           res.body.should.be.a('object');
+          res.body.should.have.property('status').equal('success');          
           res.body.should.have.property('message').equal('Logged in');          
           done();
   
@@ -98,7 +99,7 @@ describe('Signup a User', () => {
     chai.request(server).
       post('/api/v1/auth/login').
       send({
-        email: 'jide@gmail.com',
+        email: 'jide11@gmail.com',
         password: 'qwerty'
       }).
       end((err, res) => {
