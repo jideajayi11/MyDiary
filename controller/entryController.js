@@ -1,140 +1,121 @@
-import entryModel from '../model/entryModel';
+import db from '../db';
 
 class Entry {
 
-  static getEntries (req, res) {
+  static getEntries (req, res, next) {
 
-    if (entryModel.length < 1) {
+    db.any('select * from entries where userid=$1', req.decoded.userId).
+    then((data) => {
 
-      return res.status(404).json({
-        error: 404,
-        message: 'Entry not found'
+      res.status(200).
+        json({
+          status: 'success',
+          data,
+          message: 'Fetched all Entries for a User'
+        });
+
+}).
+    catch((err) => {
+      // Return next(err);
+    });
+
+}
+
+static getEntry (req, res, next) {
+
+  db.one('select * from entries where id = $1 AND userid = $2', [
+req.params.id,
+req.decoded.userId
+]).
+    then((data) => {
+
+      res.status(200).
+        json({
+          status: 'success',
+          data,
+          message: 'Fetched An Entry'
+        });
+
+}).
+    catch((err) => {
+      // Return next(err);
+    });
+
+}
+
+
+static addEntry (req, res, next) {
+
+  db.none(
+'insert into entries(id, content, title, userId)' +
+      'values(DEFAULT, ${content}, ${title}, ${userId})',
+    req.body
+).
+    then(() => {
+
+      res.status(201).
+        json({
+          status: 'success',
+          message: 'Inserted one entry'
+        });
+
+}).
+    catch((err) => {
+      // Return next(err);
+    });
+
+}
+
+
+static updateEntry (req, res, next) {
+
+  db.none('update entries set content=$1 ' +
+    'where id=$2 AND userid=$3', [
+req.body.content,
+req.params.id,
+req.decoded.userId
+]).
+    then(() => {
+
+      res.status(200).
+      json({
+        status: 'success',
+        message: 'Updated content'
       });
 
-} else if (entryModel.length >= 1) {
-
-      return res.status(200).json({
-        entryModel
-      });
-
-}
-
-return res.status(400).json({
-      error: 400,
-      message: 'Bad request'
+}).
+    catch((err) => {
+      // Return next(err);
     });
 
 }
 
-static getEntry (req, res) {
+static deleteEntry (req, res, next) {
 
-  const entry = entryModel.
-  filter((item) => item.id.toString() === req.params.id);
-  if (entry.length > 0) {
+  db.result(
+'delete from entries where id = $1 AND userid = $2',
+    [
+req.params.id,
+req.decoded.userId
+]
+).
+    then((data) => {
 
-    return res.status(200).json({
-      entry
+      res.status(200).
+        json({
+          status: 'success',
+          message: `Deleted ${data.rowCount} entry`
+        });
+
+}).
+    catch((err) => {
+      // Return next(err);
     });
-
-}
-
-return res.status(404).json({
-    error: 404,
-    message: 'Entry id not found'
-  });
-
-}
-
-static addEntry (req, res) {
-
-  if (req.body.title === undefined || req.body.content === undefined) {
-
-    return res.status(400).json({
-      error: 400,
-      message: 'Incomplete parameters'
-    });
-
-}
-  const lastId = entryModel[entryModel.length - 1].id;
-  const id = parseInt(lastId, 10) + 1;
-  const dateAdded = Date.now();
-  entryModel.push({
-    content: req.body.content,
-    dateAdded,
-    id,
-    title: req.body.title
-  });
-
-return res.status(201).json({
-  entryModel,
-    message: 'new entry added'
-  });
-
-}
-
-static updateEntry (req, res) {
-
-  const entry = entryModel.
-  filter((item) => item.id === parseInt(req.params.id, 10));
-  if (req.body.title !== undefined) {
-
-    entry[0].title = req.body.title;
-
-}
-  if (req.body.content !== undefined) {
-
-    entry[0].content = req.body.content;
-
-}
-  const index = entryModel.
-  findIndex((item) => item.id === parseInt(req.params.id, 10));
-  if (index >= 0) {
-
-    entryModel.splice(index, 1, {
-      content: entry[0].content,
-      dateAdded: entry[0].dateAdded,
-      id: entry[0].id,
-      title: entry[0].title
-    });
-
-return res.status(200).json({
-  entryModel,
-      message: 'Entry updated'
-    });
-
-}
-
-return res.status(404).json({
-    error: 404,
-    message: 'Entry not found'
-  });
-
-}
-
-static deleteEntry (req, res) {
-/*
- *const entry = entryModel.
- *filter((item) => item.id === parseInt(req.params.id, 10));
- */
-  const index = entryModel.
-  findIndex((item) => item.id === parseInt(req.params.id, 10));
-  if (index >= 0) {
-
-    entryModel.splice(index, 1);
-
-return res.status(200).json({
-  entryModel,
-      message: 'Entry was deleted'
-    });
-
-}
-
-return res.status(404).json({
-    error: 404,
-    message: 'Entry not found'
-  });
 
 }
 
 }
 export default Entry;
+
+
+// https://mherman.org/blog/2016/03/13/designing-a-restful-api-with-node-and-postgres/
