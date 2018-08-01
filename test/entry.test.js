@@ -70,7 +70,7 @@ describe('GET an Entry', () => {
 
 });
 
-it('should not allow GET due to authentication ', (done) => {
+it('should not allow GET due to wrong token', (done) => {
 
   chai.request(server).
     get('/api/v1/entry/6/1').
@@ -84,7 +84,7 @@ it('should not allow GET due to authentication ', (done) => {
 });
 
 
-it('should not allow GET due to authentication ', (done) => {
+it('should not allow GET due to no token', (done) => {
 
   chai.request(server).
     get('/api/v1/entry/6/1').
