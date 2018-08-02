@@ -22,5 +22,5 @@ if (process.env.NODE_ENV === 'test') {
 
 }*/
 
-const db = pgp(process.env.DB_PATH_TEST);
+const db = pgp('postgres://hqsnpvzb:rE3oYKLf308BFZxGqJ6CK18ooU6vBeHG@elmer.db.elephantsql.com:5432/hqsnpvzb');
 export default db;
