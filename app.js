@@ -13,11 +13,11 @@ const app = express();
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-
+/*
 app.get('/', (req, res) => res.status(200).send({
   message: 'MyDiary is an online journal where ' +
   'users can pen down their thoughts and feelings.'
-}));
+}));*/
 authRoute(app);
 
 // Authenticate routes after this function
