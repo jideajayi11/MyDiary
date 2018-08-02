@@ -9,7 +9,7 @@ chai.use(chaiHttp);
 const token = jwt.sign(
 {email: 'jide11@gmail.com',
 userId: 1},
-process.env.JWT_KEY, {expiresIn: 86400}
+'integrity', {expiresIn: 86400}
 );
 describe('POST an Entry', () => {
 
