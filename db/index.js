@@ -8,7 +8,7 @@ const options = {
 };
 
 const pgp = require('pg-promise')(options);
-/*
+
 let db;
 if (process.env.NODE_ENV === 'test') {
 
@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === 'test') {
   db = pgp(process.env.DB_PATH);
   // Console.log(process.env.NODE_ENV, 'NODE_ENV2');
 
-}*/
+}
 
-const db = pgp('postgres://hqsnpvzb:rE3oYKLf308BFZxGqJ6CK18ooU6vBeHG@elmer.db.elephantsql.com:5432/hqsnpvzb');
+
 export default db;
