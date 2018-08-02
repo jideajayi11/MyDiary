@@ -8,11 +8,12 @@ const options = {
 };
 
 const pgp = require('pg-promise')(options);
-/*
+
 let db;
 if (process.env.NODE_ENV === 'test') {
 
-  db = pgp(process.env.DB_PATH_TEST);
+  //db = pgp(process.env.DB_PATH_TEST);
+  db = pgp('postgres://hqsnpvzb:rE3oYKLf308BFZxGqJ6CK18ooU6vBeHG@elmer.db.elephantsql.com:5432/hqsnpvzb');
   // Console.log(process.env.NODE_ENV, 'NODE_ENV1');
 
 } else {
@@ -20,7 +21,7 @@ if (process.env.NODE_ENV === 'test') {
   db = pgp(process.env.DB_PATH);
   // Console.log(process.env.NODE_ENV, 'NODE_ENV2');
 
-}*/
-const db = pgp('postgres://hqsnpvzb:rE3oYKLf308BFZxGqJ6CK18ooU6vBeHG@elmer.db.elephantsql.com:5432/hqsnpvzb');
+}
+//const db = pgp('postgres://hqsnpvzb:rE3oYKLf308BFZxGqJ6CK18ooU6vBeHG@elmer.db.elephantsql.com:5432/hqsnpvzb');
 
 export default db;
