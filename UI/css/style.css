@@ -29,13 +29,13 @@ a:hover{
 header {
   background-color: #000;
   color: #fff;
-  min-height: 50px;
+  height: 65px;
   border-bottom: solid 2px #ddf;
 }
 footer {
   background-color: #000;
   color: #fff;
-  min-height: 35px;
+  height: 35px;
   width: 100%;
   border-top: solid 2px #ddf;
   position: fixed;
@@ -130,6 +130,14 @@ nav button:hover{
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
+}
+.v-spread-out{
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+}
+.body-height{
+  height: calc(100vh - 115px);
 }
 @media screen and (max-width: 992px){
     .container{
