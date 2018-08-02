@@ -8,7 +8,7 @@ const options = {
 };
 
 const pgp = require('pg-promise')(options);
-
+/*
 let db;
 if (process.env.NODE_ENV === 'test') {
 
@@ -20,5 +20,7 @@ if (process.env.NODE_ENV === 'test') {
   db = pgp(process.env.DB_PATH);
   // Console.log(process.env.NODE_ENV, 'NODE_ENV2');
 
-}
+}*/
+
+const db = pgp(process.env.DB_PATH_TEST);
 export default db;
