@@ -22,7 +22,6 @@ export default (useJoiError = false) => {
         allowUnknown: true, // Allow unknown keys that will be ignored
         stripUnknown: true // Remove unknown keys from the validated data
     }; // Return the validation middleware
-
 return (req, res, next) => {
 
         const route = req.route.path;

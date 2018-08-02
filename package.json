@@ -6,6 +6,7 @@
   "eslintIgnore": [
     "package-lock.json",
     "package.json",
+    "coverage",
     "README.md"
   ],
   "eslintConfig": {
