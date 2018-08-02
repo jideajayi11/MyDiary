@@ -6,9 +6,11 @@ import jwt from 'jsonwebtoken';
 
 const should = chai.should();
 chai.use(chaiHttp);
-const token = jwt.sign({email: 'jide11@gmail.com', userId: 1}, 
-process.env.JWT_KEY, {expiresIn: 86400});
-
+const token = jwt.sign(
+{email: 'jide11@gmail.com',
+userId: 1},
+process.env.JWT_KEY, {expiresIn: 86400}
+);
 describe('GET Time', () => {
 
     it('should GET the reminder time', (done) => {
@@ -66,6 +68,7 @@ describe('UPDATE Time', () => {
           fullName: 'Jide Unl'
         }).
         end((err, res) => {
+
           res.should.have.status(200);
           res.body.should.be.a('object');
           res.body.should.have.property('status').equal('success');

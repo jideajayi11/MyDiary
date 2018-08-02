@@ -2,7 +2,6 @@ import Entry from '../controller/entryController';
 import SchemaValidator from '../validator/middleware';
 
 const validateRequest = SchemaValidator(true);
-
 export default (app) => {
 
   app.get('/api/v1/entries', Entry.getEntries);

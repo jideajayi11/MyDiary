@@ -20,38 +20,52 @@ app.get('/', (req, res) => res.status(200).send({
 }));
 authRoute(app);
 
-//Authenticate routes after this function
+// Authenticate routes after this function
 
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
+
   let token;
-  if(process.env.NODE_ENV === 'test') {
+  if (process.env.NODE_ENV === 'test') {
+
     token = req.headers['x-access-token'];
-    //console.log(process.env.NODE_ENV, 'NODE_ENV1');
-  }else {
+    // Console.log(process.env.NODE_ENV, 'NODE_ENV1');
+
+} else {
+
     token = localStorage.getItem('myDiaryToken');
-    //console.log(process.env.NODE_ENV, 'NODE_ENV2');
-  }
-  //const token = localStorage.getItem('myDiaryToken') || req.body.token || req.query.token || req.headers['x-access-token'];
+    // Console.log(process.env.NODE_ENV, 'NODE_ENV2');
+
+}
+  // Const token = localStorage.getItem('myDiaryToken') || req.body.token || req.query.token || req.headers['x-access-token'];
   if (token) {
-    jwt.verify(token, process.env.JWT_KEY, function(err, decoded) {      
-      if (err) {
-        return res.json({ success: false, message: 'Failed to authenticate token.' });    
-      } else {
-        // if everything is good, save to request for use in other routes
-        req.decoded = decoded;    
-        next();
-      }
-    });
-  }else {
 
-    // if there is no token
-    // return an error
-    return res.status(403).send({ 
-        success: false, 
-        message: 'No token provided.' 
+    jwt.verify(token, process.env.JWT_KEY, (err, decoded) => {
+
+      if (err) {
+
+        return res.json({success: false,
+message: 'Failed to authenticate token.'});
+
+}
+        // If everything is good, save to request for use in other routes
+        req.decoded = decoded;
+        next();
+
+    });
+
+} else {
+
+    /*
+     * If there is no token
+     * return an error
+     */
+    return res.status(403).send({
+        success: false,
+        message: 'No token provided.'
     });
 
   }
+
 });
 
 entryRoute(app);
@@ -60,7 +74,4 @@ userRoute(app);
 export default app;
 
 
-
-
-
-//https://scotch.io/tutorials/authenticate-a-node-js-api-with-json-web-tokens
+// https://scotch.io/tutorials/authenticate-a-node-js-api-with-json-web-tokens

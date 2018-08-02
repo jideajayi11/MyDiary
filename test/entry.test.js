@@ -6,9 +6,11 @@ import jwt from 'jsonwebtoken';
 
 const should = chai.should();
 chai.use(chaiHttp);
-const token = jwt.sign({email: 'jide11@gmail.com', userId: 1}, 
-process.env.JWT_KEY, {expiresIn: 86400});
-
+const token = jwt.sign(
+{email: 'jide11@gmail.com',
+userId: 1},
+process.env.JWT_KEY, {expiresIn: 86400}
+);
 describe('POST an Entry', () => {
 
   it('should add a new Entry', (done) => {
@@ -29,6 +31,7 @@ describe('POST an Entry', () => {
         expect(res.body).to.have.property('status').equal('success');
         expect(res.body).to.have.property('message').equal('Inserted one entry');
         done();
+
 });
 
 });
@@ -43,6 +46,7 @@ describe('GET all Entries', () => {
       get('/api/v1/entries').
       set('x-access-token', token).
       end((err, res) => {
+
         expect(res.status).to.equal(200);
         expect(res.body).to.have.property('status').equal('success');
         expect(res.body).to.have.property('message').equal('Fetched all Entries for a User');
@@ -53,6 +57,7 @@ describe('GET all Entries', () => {
         'does not need to keep adding values to himself and I will show you an unwise man');
         expect(res.body.data[0]).to.have.property('dateadded');
         done();
+
 });
 
 });
@@ -67,6 +72,7 @@ describe('GET an Entry', () => {
       get('/api/v1/entry/1').
       set('x-access-token', token).
       end((err, res) => {
+
         expect(res.status).to.equal(200);
         expect(res.body).to.have.property('status').equal('success');
         expect(res.body).to.have.property('message').equal('Fetched An Entry');
@@ -88,9 +94,11 @@ it('should not allow GET due to wrong token', (done) => {
     get('/api/v1/entry/1').
     set('x-access-token', 'token').
     end((err, res) => {
+
       expect(res.body).to.have.property('success').equal(false);
       expect(res.body).to.have.property('message').equal('Failed to authenticate token.');
       done();
+
 });
 
 });
@@ -101,10 +109,12 @@ it('should not allow GET due to no token', (done) => {
   chai.request(server).
     get('/api/v1/entry/1').
     end((err, res) => {
-      expect(res.status).to.equal(403);      
+
+      expect(res.status).to.equal(403);
       expect(res.body).to.have.property('success').equal(false);
       expect(res.body).to.have.property('message').equal('No token provided.');
       done();
+
 });
 
 });

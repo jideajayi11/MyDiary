@@ -1,4 +1,4 @@
-import promise from "bluebird";
+import promise from 'bluebird';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -10,11 +10,15 @@ const options = {
 const pgp = require('pg-promise')(options);
 
 let db;
-if(process.env.NODE_ENV === 'test') {
+if (process.env.NODE_ENV === 'test') {
+
   db = pgp(process.env.DB_PATH_TEST);
-  //console.log(process.env.NODE_ENV, 'NODE_ENV1');
-}else {
+  // Console.log(process.env.NODE_ENV, 'NODE_ENV1');
+
+} else {
+
   db = pgp(process.env.DB_PATH);
-  //console.log(process.env.NODE_ENV, 'NODE_ENV2');
+  // Console.log(process.env.NODE_ENV, 'NODE_ENV2');
+
 }
 export default db;
