@@ -18,8 +18,8 @@ if (process.env.NODE_ENV === 'test') {
 
 } else {
 
-  //db = pgp(process.env.DB_PATH);
-  db = pgp('postgres://hqsnpvzb:rE3oYKLf308BFZxGqJ6CK18ooU6vBeHG@elmer.db.elephantsql.com:5432/hqsnpvzb');
+  db = pgp(process.env.DB_PATH);
+  //db = pgp('postgres://hqsnpvzb:rE3oYKLf308BFZxGqJ6CK18ooU6vBeHG@elmer.db.elephantsql.com:5432/hqsnpvzb');
   // Console.log(process.env.NODE_ENV, 'NODE_ENV2');
 
 }
