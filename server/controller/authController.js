@@ -18,39 +18,38 @@ class Auth {
             bcrypt.hash(req.body.password, salt, (err, hash) => {
 
               db.none(
-'insert into users(id, fullName, email, password, reminderTime)' +
-            'values(DEFAULT, $1, $2, $3, $4)',
-              [
-req.body.fullName,
-req.body.email,
-hash,
-'7:00am'
-]
-).
+              'insert into users(id, fullName, email, password, reminderTime)' +
+               'values(DEFAULT, $1, $2, $3, $4)',
+                            [
+              req.body.fullName,
+              req.body.email,
+              hash,
+              '7:00am'
+              ]
+              ).
               then(() => {
 
                 db.one('select id from users where email = $1', req.body.email).
                 then((data2) => {
 
                   const token = jwt.sign(
-{email: req.body.email,
-userId: data2.id},
+                  {email: req.body.email,
+                  userId: data2.id},
                     process.env.JWT_KEY, {expiresIn: 86400}
-);
+                  );
                   localStorage.setItem('myDiaryToken', token);
 
-});
-
-               // Res.header('x-auth-token', token).status(201)
+                });
                 res.status(201).
                   json({
                     status: 'success',
-                    message: 'Inserted one user'
+                    token,
+                    message: 'User signup was successful'
                   });
 
 }).
               catch((err) => {
-                // Return next(err);
+              
               });
 
 });
@@ -86,34 +85,35 @@ userId: data2.id},
 
             const userId = user[0].id;
             const token = jwt.sign(
-{email: req.body.email,
-userId},
+            {email: req.body.email,
+            userId},
               process.env.JWT_KEY, {expiresIn: 86400}
 );
             localStorage.setItem('myDiaryToken', token);
 
-return res.status(200).json({
+            return res.status(200).json({
               status: 'success',
-              message: 'Logged in'
+              token,
+              message: 'You are now logged in'
             });
 
           }
 
-return res.status(404).json({
+            return res.status(404).json({
               status: 'error',
               message: 'Authentication failed. Invalid password.'
             });
 
         });
 
-} else {
+        } else {
 
-        return res.status(404).json({
-          status: 'error',
-          message: 'Authentication failed. User not found.'
-        });
+                return res.status(404).json({
+                  status: 'error',
+                  message: 'Authentication failed. User not found.'
+                });
 
-}
+        }
 
 });
 

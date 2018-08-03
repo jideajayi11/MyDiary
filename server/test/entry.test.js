@@ -29,7 +29,7 @@ describe('POST an Entry', () => {
         res.should.have.status(201);
         res.body.should.be.a('object');
         expect(res.body).to.have.property('status').equal('success');
-        expect(res.body).to.have.property('message').equal('Inserted one entry');
+        expect(res.body).to.have.property('message').equal('Your Entry was successfully added');
         done();
 
 });
@@ -49,7 +49,7 @@ describe('GET all Entries', () => {
 
         expect(res.status).to.equal(200);
         expect(res.body).to.have.property('status').equal('success');
-        expect(res.body).to.have.property('message').equal('Fetched all Entries for a User');
+        expect(res.body).to.have.property('message').equal('These are all your entries');
         expect(res.body.data[0]).to.have.property('id').equal(1);
         expect(res.body.data[0]).to.have.property('userid').equal(1);
         expect(res.body.data[0]).to.have.property('title').equal('seek values');
@@ -75,7 +75,7 @@ describe('GET an Entry', () => {
 
         expect(res.status).to.equal(200);
         expect(res.body).to.have.property('status').equal('success');
-        expect(res.body).to.have.property('message').equal('Fetched An Entry');
+        expect(res.body).to.have.property('message').equal('Your Entry was found');
         expect(res.body.data).to.have.property('id').equal(1);
         expect(res.body.data).to.have.property('userid').equal(1);
         expect(res.body.data).to.have.property('title').equal('seek values');
@@ -95,7 +95,7 @@ it('should not allow GET due to wrong token', (done) => {
     set('x-access-token', 'token').
     end((err, res) => {
 
-      expect(res.body).to.have.property('success').equal(false);
+      expect(res.body).to.have.property('success').equal('error');
       expect(res.body).to.have.property('message').equal('Failed to authenticate token.');
       done();
 
@@ -111,7 +111,7 @@ it('should not allow GET due to no token', (done) => {
     end((err, res) => {
 
       expect(res.status).to.equal(403);
-      expect(res.body).to.have.property('success').equal(false);
+      expect(res.body).to.have.property('success').equal('error');
       expect(res.body).to.have.property('message').equal('No token provided.');
       done();
 
@@ -137,7 +137,7 @@ describe('UPDATE an Entry', () => {
         res.should.have.status(200);
         res.body.should.be.a('object');
         expect(res.body).to.have.property('status').equal('success');
-        expect(res.body).to.have.property('message').equal('Updated content');
+        expect(res.body).to.have.property('message').equal('Your Entry content was successfully updated');
         done();
 
 });
@@ -157,8 +157,40 @@ describe('DELETE an Entry', () => {
         res.should.have.status(200);
         res.body.should.be.a('object');
         expect(res.body).to.have.property('status').equal('success');
-        expect(res.body).to.have.property('message').equal('Deleted 1 entry');
+        expect(res.body).to.have.property('message').equal('The Entry has been deleted');
         done();
+
+});
+
+});
+
+it('should Get empty Entries', (done) => {
+
+  chai.request(server).
+    get('/api/v1/entries').
+    set('x-access-token', token).
+    end((err, res) => {
+
+      expect(res.status).to.equal(200);
+      expect(res.body).to.have.property('status').equal('success');
+      expect(res.body).to.have.property('message').equal('You do not have any entry yet');
+      done();
+
+});
+
+});
+
+it('should GET no Entry given an id', (done) => {
+
+  chai.request(server).
+    get('/api/v1/entry/1').
+    set('x-access-token', token).
+    end((err, res) => {
+
+      expect(res.status).to.equal(404);
+      expect(res.body).to.have.property('status').equal('error');
+      expect(res.body).to.have.property('message').equal('The Entry you are looking for, does not exist');
+      done();
 
 });
 

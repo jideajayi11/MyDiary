@@ -1,3 +1,5 @@
+// https://mherman.org/blog/2016/03/13/designing-a-restful-api-with-node-and-postgres/
+
 import db from '../helpers/db';
 
 class Entry {
@@ -6,17 +8,23 @@ class Entry {
 
     db.any('select * from entries where userid=$1', req.decoded.userId).
     then((data) => {
-
-      res.status(200).
+      if(data.length) {
+        res.status(200).
         json({
           status: 'success',
           data,
-          message: 'Fetched all Entries for a User'
+          message: 'These are all your entries'
         });
-
+      }else {
+        res.status(200).
+        json({
+          status: 'success',
+          message: 'You do not have any entry yet'
+        });
+      }
 }).
     catch((err) => {
-      // Return next(err);
+     
     });
 
 }
@@ -28,17 +36,25 @@ req.params.id,
 req.decoded.userId
 ]).
     then((data) => {
-
-      res.status(200).
+      if(data.length) {
+        res.status(200).
         json({
           status: 'success',
           data,
-          message: 'Fetched An Entry'
+          message: 'Your Entry was found'
         });
+      }else {
+        res.status(404).
+        json({
+          status: 'error',
+          message: 'The Entry you are looking for, does not exist'
+        });
+      }
+      
 
 }).
     catch((err) => {
-      // Return next(err);
+      
     });
 
 }
@@ -56,12 +72,12 @@ static addEntry (req, res, next) {
       res.status(201).
         json({
           status: 'success',
-          message: 'Inserted one entry'
+          message: 'Your Entry was successfully added'
         });
 
 }).
     catch((err) => {
-      // Return next(err);
+      
     });
 
 }
@@ -80,12 +96,12 @@ req.decoded.userId
       res.status(200).
       json({
         status: 'success',
-        message: 'Updated content'
+        message: 'Your Entry content was successfully updated'
       });
 
 }).
     catch((err) => {
-      // Return next(err);
+      
     });
 
 }
@@ -104,18 +120,15 @@ req.decoded.userId
       res.status(200).
         json({
           status: 'success',
-          message: `Deleted ${data.rowCount} entry`
+          message: `The Entry has been deleted`
         });
 
 }).
     catch((err) => {
-      // Return next(err);
+      
     });
 
 }
 
 }
 export default Entry;
-
-
-// https://mherman.org/blog/2016/03/13/designing-a-restful-api-with-node-and-postgres/

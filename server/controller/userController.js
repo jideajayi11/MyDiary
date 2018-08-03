@@ -11,12 +11,12 @@ class User {
           json({
             status: 'success',
             time,
-            message: 'Get Time'
+            message: 'This is your current reminder time'
           });
 
 }).
       catch((err) => {
-        // Return next(err);
+        
       });
 
 }
@@ -25,20 +25,20 @@ class User {
 
       db.none('update users set reminderTime=$1 ' +
       'where id=$2', [
-req.body.remindertime,
-req.params.id
-]).
+      req.body.remindertime,
+      req.params.id
+      ]).
       then(() => {
 
         res.status(200).
         json({
           status: 'success',
-          message: 'Updated Reminder Time'
+          message: 'New Reminder Time was set'
         });
 
 }).
       catch((err) => {
-        // Return next(err);
+     
       });
 
 }
@@ -47,20 +47,20 @@ req.params.id
 
       db.none('update users set fullName=$1 ' +
         'where id=$2', [
-req.body.fullName,
-req.params.id
-]).
+      req.body.fullName,
+      req.params.id
+      ]).
         then(() => {
 
           res.status(200).
           json({
             status: 'success',
-            message: 'Updated Full Name'
+            message: 'Your name you successfully updated'
           });
 
 }).
         catch((err) => {
-          // Return next(err);
+          
         });
 
 }

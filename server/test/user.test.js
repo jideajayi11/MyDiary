@@ -23,7 +23,7 @@ describe('GET Time', () => {
           res.should.have.status(200);
           res.body.should.be.a('object');
           expect(res.body).to.have.property('status').equal('success');
-          expect(res.body).to.have.property('message').equal('Get Time');
+          expect(res.body).to.have.property('message').equal('This is your current reminder time');
           res.body.time.should.have.property('remindertime').equal('07:00:00');
           done();
 
@@ -48,7 +48,7 @@ describe('UPDATE Time', () => {
           res.should.have.status(200);
           res.body.should.be.a('object');
           res.body.should.have.property('status').equal('success');
-          res.body.should.have.property('message').equal('Updated Reminder Time');
+          res.body.should.have.property('message').equal('New Reminder Time was set');
           done();
 
   });
@@ -72,7 +72,7 @@ describe('UPDATE Time', () => {
           res.should.have.status(200);
           res.body.should.be.a('object');
           res.body.should.have.property('status').equal('success');
-          res.body.should.have.property('message').equal('Updated Full Name');
+          res.body.should.have.property('message').equal('Your name you successfully updated');
           done();
 
   });

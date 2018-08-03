@@ -40,21 +40,19 @@ return (req, res, next) => {
 
                         // Joi Error
                         const JoiError = {
-                            status: 'failed',
-                            error: {
-                                original: err._object,
+                            status: 'fail',
 
                                 // Fetch only message and type from each error
                                 details: _.map(err.details, ({message, type}) => ({
                                     message: message.replace(/['"]/g, ''),
                                     type
                                 }))
-                            }
+                            
                         };
 
                         // Custom Error
                         const CustomError = {
-                            status: 'failed',
+                            status: 'fail',
                             error: 'Invalid request data. Please review request and try again.'
                         }; // Send back the JSON error response
                         res.status(422).json(_useJoiError ? JoiError : CustomError);

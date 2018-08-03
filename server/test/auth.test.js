@@ -22,7 +22,7 @@ describe('Signup a User', () => {
           res.should.have.status(201);
           res.body.should.be.a('object');
           res.body.should.have.property('status').equal('success');
-          res.body.should.have.property('message').equal('Inserted one user');
+          res.body.should.have.property('message').equal('User signup was successful');
           done();
 
   });
@@ -69,7 +69,7 @@ describe('Signup a User', () => {
           res.should.have.status(200);
           res.body.should.be.a('object');
           res.body.should.have.property('status').equal('success');
-          res.body.should.have.property('message').equal('Logged in');
+          res.body.should.have.property('message').equal('You are now logged in');
           done();
 
   });
