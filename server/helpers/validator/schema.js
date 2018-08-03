@@ -2,9 +2,7 @@ import Joi from 'joi';
 
 const newEntry = Joi.object().keys({
   content: Joi.string().required(),
-  title: Joi.string().required(),
-  userId: Joi.number().integer().
-required()
+  title: Joi.string().required()
 });
 const updateEntry = Joi.object().keys({
   content: Joi.string().required()
@@ -37,7 +35,7 @@ const updateTime = Joi.object().keys({
 });
 export default {
   '/api/v1/entry': newEntry,
-  '/api/v1/entry/:userid/:id': updateEntry,
+  '/api/v1/entry/:id': updateEntry,
   '/api/v1/auth/signup': newUser,
   '/api/v1/auth/updateUsers/:id': updateUser,
   '/api/v1/reminder/:id': updateTime,

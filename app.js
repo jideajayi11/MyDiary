@@ -25,7 +25,7 @@ authRoute(app);
 // Authenticate routes after this function
 
 app.use((req, res, next) => {
-
+/*
   let token;
   if (req.headers['x-access-token']) {
 
@@ -35,8 +35,8 @@ app.use((req, res, next) => {
 
     token = localStorage.getItem('myDiaryToken');
 
-}
-  // Const token = localStorage.getItem('myDiaryToken') || req.body.token || req.query.token || req.headers['x-access-token'];
+}*/
+  const token = req.body.token || req.query.token || req.headers['x-access-token'];
   if (token) {
 
     jwt.verify(token, process.env.JWT_KEY, (err, decoded) => {

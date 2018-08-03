@@ -38,18 +38,18 @@ class Auth {
                     process.env.JWT_KEY, {expiresIn: 86400}
                   );
                   localStorage.setItem('myDiaryToken', token);
-
-                });
-                res.status(201).
+                  res.status(201).
                   json({
                     status: 'success',
                     token,
                     message: 'User signup was successful'
                   });
+                });
+                
 
 }).
               catch((err) => {
-              
+                next(err);
               });
 
 });

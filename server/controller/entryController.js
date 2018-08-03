@@ -24,7 +24,7 @@ class Entry {
       }
 }).
     catch((err) => {
-     
+     next(err);
     });
 
 }
@@ -36,25 +36,15 @@ req.params.id,
 req.decoded.userId
 ]).
     then((data) => {
-      if(data.length) {
         res.status(200).
         json({
           status: 'success',
           data,
           message: 'Your Entry was found'
         });
-      }else {
-        res.status(404).
-        json({
-          status: 'error',
-          message: 'The Entry you are looking for, does not exist'
-        });
-      }
-      
-
 }).
     catch((err) => {
-      
+      next(err);
     });
 
 }
@@ -63,9 +53,9 @@ req.decoded.userId
 static addEntry (req, res, next) {
 
   db.none(
-'insert into entries(id, content, title, userId)' +
-      'values(DEFAULT, ${content}, ${title}, ${userId})',
-    req.body
+'insert into entries(id, content, title, userid)' +
+      'values(DEFAULT, $1, $2, $3)',
+    [req.body.content, req.body.title, req.decoded.userId]
 ).
     then(() => {
 
@@ -77,7 +67,7 @@ static addEntry (req, res, next) {
 
 }).
     catch((err) => {
-      
+      next(err);
     });
 
 }
@@ -101,7 +91,7 @@ req.decoded.userId
 
 }).
     catch((err) => {
-      
+      next(err);
     });
 
 }
@@ -125,7 +115,7 @@ req.decoded.userId
 
 }).
     catch((err) => {
-      
+      next(err);
     });
 
 }

@@ -72,7 +72,7 @@ describe('UPDATE Time', () => {
           res.should.have.status(200);
           res.body.should.be.a('object');
           res.body.should.have.property('status').equal('success');
-          res.body.should.have.property('message').equal('Your name you successfully updated');
+          res.body.should.have.property('message').equal('Your name was successfully updated');
           done();
 
   });

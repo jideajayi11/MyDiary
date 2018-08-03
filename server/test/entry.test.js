@@ -180,20 +180,4 @@ it('should Get empty Entries', (done) => {
 
 });
 
-it('should GET no Entry given an id', (done) => {
-
-  chai.request(server).
-    get('/api/v1/entry/1').
-    set('x-access-token', token).
-    end((err, res) => {
-
-      expect(res.status).to.equal(404);
-      expect(res.body).to.have.property('status').equal('error');
-      expect(res.body).to.have.property('message').equal('The Entry you are looking for, does not exist');
-      done();
-
-});
-
-});
-
 });

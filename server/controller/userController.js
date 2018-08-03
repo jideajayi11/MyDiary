@@ -16,7 +16,7 @@ class User {
 
 }).
       catch((err) => {
-        
+        next(err);
       });
 
 }
@@ -38,7 +38,7 @@ class User {
 
 }).
       catch((err) => {
-     
+        next(err);
       });
 
 }
@@ -55,12 +55,12 @@ class User {
           res.status(200).
           json({
             status: 'success',
-            message: 'Your name you successfully updated'
+            message: 'Your name was successfully updated'
           });
 
 }).
         catch((err) => {
-          
+          next(err);
         });
 
 }
