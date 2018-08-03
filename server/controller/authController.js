@@ -1,4 +1,4 @@
-import db from '../db';
+import db from '../helpers/db';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 

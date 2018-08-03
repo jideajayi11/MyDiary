@@ -1,5 +1,5 @@
 import Auth from '../controller/authController';
-import SchemaValidator from '../validator/middleware';
+import SchemaValidator from '../helpers/validator/middleware';
 
 const validateRequest = SchemaValidator(true);
 export default (app) => {

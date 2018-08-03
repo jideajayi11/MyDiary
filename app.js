@@ -1,9 +1,9 @@
 import bodyParser from 'body-parser';
-import entryRoute from './routes/entryRoute';
+import entryRoute from './server/routes/entryRoute';
 import express from 'express';
 import logger from 'morgan';
-import userRoute from './routes/userRoute';
-import authRoute from './routes/authRoute';
+import userRoute from './server/routes/userRoute';
+import authRoute from './server/routes/authRoute';
 import jwt from 'jsonwebtoken';
 
 const LocalStorage = require('node-localstorage').LocalStorage;
