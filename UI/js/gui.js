@@ -1,3 +1,24 @@
+function loadHeader () {
+
+  const contentHeader = `<div class="container spread-in">
+                          <div class="logo-title">MyDiary</div>
+                          <div class="menus">
+                            <nav>
+                              <div id="menu-element">
+                                  <span class="element"><a href="signUp.html">Sign Up</a></span>
+                                  <span class="element"><a href="index.html">Login</a></span>
+                              </div>
+                            </nav>
+                          </div>
+                        </div>`;
+  document.getElementById('headerAuth').innerHTML = contentHeader;
+
+  const contentFooter = `<div class="container">
+                            &copy; 2018 MyDiaryApp. All rights reserved.
+                        </div>`;
+  document.getElementById('footerAuth').innerHTML = contentFooter;
+
+/*
 document.querySelector('nav button').addEventListener('click', () => {
 
   const menu = document.querySelector('#menu-element').style.display;
@@ -12,6 +33,7 @@ document.querySelector('nav button').addEventListener('click', () => {
 }
 
 });
+
 const mq = window.matchMedia('(max-width: 768px)');
 mq.addListener((changed) => {
 
@@ -26,3 +48,5 @@ mq.addListener((changed) => {
 }
 
 });
+*/
+}

@@ -4,41 +4,34 @@
       <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-        <header class="container">
-            <div class="logo-title">MyDiary App.</div>
-            <nav>
-                <div id="menu-icon">
-                    <button>
-                        <span class="strip"></span>
-                        <span class="strip"></span>
-                        <span class="strip"></span>
-                    </button><br>
-                    <hr>
-                </div>
+        <header id="headerInner">
+          <div class="container spread-in">
+            <div class="logo-title">MyDiary</div>
+            <div class="menus">
+              <nav>
                 <div id="menu-element">
                     <span class="element"><a href="view.html">Home</a></span>
                     <span class="element"><a href="add.html">New Entry</a></span>
                     <span class="element"><a href="profile.html">Profile</a></span>
-                    <span class="element"><a href="login.html">Logout</a></span>
-                    <br><hr>
+                    <span class="element"><a href="index.html">Logout</a></span>
                 </div>
-            </nav>
+              </nav>
+            </div>
+          </div>
         </header>
-        <div class="container">
-          <div class="box-title">Entry</div><hr>
+        <div class="container v-spread-out body-height">
+          <div class="spread-in">
+            <div class="text-holder title">The Dragons</div>
+            <span>3rd August, 2018.</span>
+          </div>
+            <div class="text-holder">I went to the cinema to see - The Dragons, I was really awesome and I enjoyed myself. I think I should create more time to see the movies.</div>
+            <a href="#"><button class="text-holder">Close</button></a>
         </div>
-        <div class="container-hidden">
-            <div class="text-holder">
-                Duis autem vel eum iriure dolor in hen
-            </div>
-            <div class="text-holder ext">
-                At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.<br>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-            </div>
-            <a href="edit.html"><button>Edit</button></a>
-        </div>
-        <div class="container footer">
-            &copy; 2018 MyDiaryApp. All rights reserved.
-        </div>
+        <footer id="footerAuth">
+          <div class="container">
+              &copy; 2018 MyDiaryApp. All rights reserved.
+          </div>
+        </footer>
         <script type="text/javascript" src="js/gui.js"></script>
     </body>
 </html>
