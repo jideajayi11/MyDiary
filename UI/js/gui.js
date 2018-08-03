@@ -6,15 +6,8 @@ function loadHeader () {
                             <nav>
                               <div id="menu-element">
                                   <span class="element"><a href="signUp.html">Sign Up</a></span>
-                                  <span class="element"><a href="login.html">Login</a></span>
+                                  <span class="element"><a href="index.html">Login</a></span>
                               </div>
-                            </nav>
-                            <nav>
-                              <button id="menu-icon">
-                                  <span class="strip"></span>
-                                  <span class="strip"></span>
-                                  <span class="strip"></span>
-                              </button>
                             </nav>
                           </div>
                         </div>`;
@@ -25,7 +18,7 @@ function loadHeader () {
                         </div>`;
   document.getElementById('footerAuth').innerHTML = contentFooter;
 
-
+/*
 document.querySelector('nav button').addEventListener('click', () => {
 
   const menu = document.querySelector('#menu-element').style.display;
@@ -55,5 +48,5 @@ mq.addListener((changed) => {
 }
 
 });
-
+*/
 }

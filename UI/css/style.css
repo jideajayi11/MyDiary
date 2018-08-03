@@ -109,7 +109,7 @@ nav button:hover{
     background-color: rgba(0, 0, 0, 0.85);
     margin-right: auto;
     margin-left: auto;
-    width: 100%;
+    width: calc(100% - 40px);
     max-width: 300px;
     color: #fff;
     font-size: 14px;
@@ -131,6 +131,11 @@ nav button:hover{
   flex-flow: row nowrap;
   justify-content: space-between;
 }
+.spread-out{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
 .v-spread-out{
   display: flex;
   flex-flow: column nowrap;
@@ -138,6 +143,91 @@ nav button:hover{
 }
 .body-height{
   height: calc(100vh - 115px);
+}
+input.text-holder{
+  width: 200px;
+  height: 30px;
+  padding: 5px;
+  margin-right: 20px;
+  background: rgba(255, 255, 255, 0.8);
+}
+textarea.text-holder{
+  width: 100%;
+  height: 60vh;
+  padding: 5px;
+  margin-right: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  resize: none;
+}
+div.text-holder{
+  width: calc(100% - 10px);
+  height: 60vh;
+  padding: 5px;
+  margin-right: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  resize: none;
+  border: solid 1px #000;
+}
+div.text-holder.title{
+  width: 200px;
+  height: 30px;
+  padding: 5px;
+  margin-right: 20px;
+  background: rgba(255, 255, 255, 0.8);
+  border: solid 1px #000;
+}
+button.text-holder{
+  width: 100px;
+  height: 40px;
+  font-size: 18px;
+}
+.sticker{
+    border: solid 0.6px #ccc;
+    border-radius: 3px;
+    box-shadow: 1px 1px 4px rgb(0, 0, 0);
+    width: 200px;
+    color: #000;
+    background-color: #fff;
+    padding: 5px;
+    margin: 5px;
+}
+.sticker .date{
+    float: right;
+    font-size: 12px;
+}
+.sticker .title{
+    text-align: left;
+    font-weight: 600;
+}
+.sticker input{
+    color: #444;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 1px 1px 4px rgb(8, 100, 256);
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 5px;
+}
+.content{
+    white-space: wrap;
+    overflow: hidden;
+    max-height: 65px;
+    text-align: justify;
+}
+.overlay{
+    color: #444;
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
+}
+.overlay a{
+    color: rgb(202, 22, 22);
+    font-size: 12px;
+}
+.overlay a:hover{
+    color: #888;
 }
 @media screen and (max-width: 992px){
     .container{
@@ -156,14 +246,8 @@ nav button:hover{
     .container-hidden{
         margin: 10px 25px;
     }
-    nav button{
-        display: block;
-    }
     #menu-icon{
         margin-top: 0;
-    }
-    #menu-element{
-        display: none;
     }
 }
 @media screen and (max-width: 600px){

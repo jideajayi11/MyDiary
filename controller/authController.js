@@ -2,8 +2,6 @@ import db from '../db';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
-const LocalStorage = require('node-localstorage').LocalStorage;
-const localStorage = new LocalStorage('./scratch');
 class Auth {
 
     static addUser (req, res, next) {
@@ -37,7 +35,6 @@ hash,
 userId: data2.id},
                     process.env.JWT_KEY, {expiresIn: 86400}
 );
-                  localStorage.setItem('myDiaryToken', token);
 
 });
 
@@ -90,10 +87,10 @@ userId: data2.id},
 userId},
               process.env.JWT_KEY, {expiresIn: 86400}
 );
-            localStorage.setItem('myDiaryToken', token);
 
 return res.status(200).json({
               status: 'success',
+              token,
               message: 'Logged in'
             });
 

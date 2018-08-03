@@ -6,8 +6,6 @@ import userRoute from './routes/userRoute';
 import authRoute from './routes/authRoute';
 import jwt from 'jsonwebtoken';
 
-const LocalStorage = require('node-localstorage').LocalStorage;
-const localStorage = new LocalStorage('./scratch');
 
 const app = express();
 app.use(logger('dev'));
@@ -24,19 +22,7 @@ authRoute(app);
 
 app.use((req, res, next) => {
 
-  let token;
-  if (process.env.NODE_ENV === 'test') {
-
-    token = req.headers['x-access-token'];
-    // Console.log(process.env.NODE_ENV, 'NODE_ENV1');
-
-} else {
-
-    token = localStorage.getItem('myDiaryToken');
-    // Console.log(process.env.NODE_ENV, 'NODE_ENV2');
-
-}
-  // Const token = localStorage.getItem('myDiaryToken') || req.body.token || req.query.token || req.headers['x-access-token'];
+  const token = req.headers['x-access-token'] || req.body.token || req.query.token;
   if (token) {
 
     jwt.verify(token, process.env.JWT_KEY, (err, decoded) => {
