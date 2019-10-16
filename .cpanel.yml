@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/retenzocelvz/myDiary/
+    - /bin/cp -R * $DEPLOYPATH
